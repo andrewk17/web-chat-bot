@@ -26,7 +26,7 @@ angular
   .service('msgService', function($http) {
     const services = this;
 
-    let currentPromptIndex = 0;
+    var currentPromptIndex = 0;
     services.order;
     services.botResponses;
     services.userName;
