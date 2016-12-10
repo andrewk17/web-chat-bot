@@ -19,8 +19,9 @@ angular
   .service('msgService', function($http) {
     const services = this;
 
-    services.currentPrompt = 0;
-    services.bot;
+    let currentPromptIndex = 0,
+      order = null,
+      botResponses = null;
 
     services.msgs = [{
       msg: 'Welcome to Chat Bot!',
@@ -35,12 +36,13 @@ angular
     }
 
     services.submitMessage = function(msg) {
-        addMessage(msg, false);
-        services.postMsg(msg);
-        addMessage(services.bot.responses[services.bot.order[services.currentPrompt]], true);
-        if (services.currentPrompt++ === services.bot.order.length) {
-          services.currentPrompt = 0;
-        }
+      addMessage(msg, false);
+      services.postMsg(msg);
+      const nextResponse = order[currentPromptIndex];
+      addMessage(botResponses[nextResponse], true);
+      if (currentPromptIndex++ === order.length) {
+        currentPromptIndex = 0;
+      }
     };
 
     services.postMsg = function(msg) {
@@ -56,7 +58,8 @@ angular
     services.getBotResponses = function() {
        $http.get('/bot/responses')
          .then(function(data) {
-           services.bot = data.data;
+           order = data.data.order;
+           botResponses = data.data.responses;
          });
     }
 
