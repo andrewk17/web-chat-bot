@@ -3,8 +3,10 @@ angular
   ])
   .controller('ChatBoxController', ['$http', function($http) {
     const chat = this;
+    chat.msgs = ['Welcome to Chat Bot!'];
 
     chat.submitMsg = function() {
+      chat.msgs.push(chat.msg);
       $http.post('/users', {})
         .then(function(data) {
           console.log('success with post')
@@ -15,11 +17,11 @@ angular
     return {
       template: `
       <div>
-        <ul>
-          <li>Welcome to Chat Bot!</li>
-        </ul>
+        <div ng-repeat="msg in chatBox.msgs">
+        {{msg}}
+        </div>
         <form ng-submit="chatBox.submitMsg()" >
-          <input type="text">
+          <input ng-model="chatBox.msg" type="text">
         </form>
       </div>
       `
