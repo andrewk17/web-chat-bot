@@ -15,13 +15,20 @@ angular
         scroller.scrollTop = scroller.scrollHeight;
       }, 0, false);
     }
+
+    msgService.getBotResponses()
+      .then(function(data) {
+        msgService.order = data.data.order;
+        msgService.botResponses = data.data.responses;
+        msgService.getNextBotMsg();
+      })
   }])
   .service('msgService', function($http) {
     const services = this;
 
-    let currentPromptIndex = 0,
-      order = null,
-      botResponses = null;
+    let currentPromptIndex = 0;
+    services.order;
+    services.botResponses;
 
     services.msgs = [{
       msg: 'Welcome to Chat Bot!',
@@ -38,12 +45,16 @@ angular
     services.submitMessage = function(msg) {
       addMessage(msg, false);
       services.postMsg(msg);
-      const nextResponse = order[currentPromptIndex];
-      addMessage(botResponses[nextResponse], true);
-      if (currentPromptIndex++ === order.length) {
+      services.getNextBotMsg();
+    };
+
+    services.getNextBotMsg = function() {
+      const nextResponse = services.order[currentPromptIndex];
+      addMessage(services.botResponses[nextResponse], true);
+      if (currentPromptIndex++ === services.order.length) {
         currentPromptIndex = 0;
       }
-    };
+    }
 
     services.postMsg = function(msg) {
       $http.post('/users', {
@@ -56,19 +67,13 @@ angular
     }
 
     services.getBotResponses = function() {
-       $http.get('/bot/responses')
-         .then(function(data) {
-           order = data.data.order;
-           botResponses = data.data.responses;
-         });
+       return $http.get('/bot/responses');
     }
-
-    services.getBotResponses();
   })
   .directive('chatBox', function() {
     return {
       template: `
-      <div class="messages" schroll-bottom="messages">
+      <div class="messages">
         <div ng-class="{'bot-div': !msg.bot}" ng-repeat="msg in chatBox.msgs track by $index">
         <span ng-class="msg.bot ? 'bot' : 'user'">{{msg.msg}}</span>
         </div>
