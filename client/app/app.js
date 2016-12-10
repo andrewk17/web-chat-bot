@@ -3,10 +3,17 @@ angular
   ])
   .controller('ChatBoxController', ['services', function(services) {
     const chat = this;
-    chat.msgs = ['Welcome to Chat Bot!'];
+    chat.msgs = [{
+      msg: 'Welcome to Chat Bot!',
+      bot: true
+    }];
 
     chat.submitMsg = function() {
-      chat.msgs.push(chat.msg);
+      chat.msgs.push({
+        msg: chat.msg,
+        bot: false
+      });
+      chat.msg = '';
       services.postMsg();
     }
   }])
@@ -23,8 +30,8 @@ angular
     return {
       template: `
       <div class="messages">
-        <div ng-repeat="msg in chatBox.msgs track by $index">
-        {{msg}}
+        <div ng-class="{bot: msg.bot}" ng-repeat="msg in chatBox.msgs track by $index">
+        {{msg.msg}}
         </div>
       </div>
       <form ng-submit="chatBox.submitMsg()" >
