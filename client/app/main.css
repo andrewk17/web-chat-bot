@@ -8,6 +8,18 @@ body {
   flex-direction: column;
 }
 
+input[type="text"]
+{
+  font-size: 3vh;
+  padding-left: .5em;
+}
+
+h1 {
+  margin-bottom: 0.5em;
+  margin-top: 0.5em;
+  font-size: 4vh;
+}
+
 .title {
   text-align: center;
 }
@@ -21,7 +33,7 @@ body {
 
 .messages {
   flex: 1;
-  margin: 20px;
+  margin: .5em;
   font-size: 3vh;
 }
 
@@ -35,8 +47,8 @@ body {
   text-align: left;
   color: black;
   background-color: #E5E5EA;
-  padding: 5px;
-  border-radius: 5px;
+  padding: .3em;
+  border-radius: .2em;
   display: inline-block;
 }
 
@@ -50,7 +62,7 @@ body {
   color: white;
   background-color: #0B93F6;
   padding: 5px;
-  border-radius: 5px;
+  border-radius: .3em;
   display: inline-block;
 }
 
