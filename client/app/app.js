@@ -1,7 +1,7 @@
 angular
   .module('app', [
   ])
-  .controller('ChatBoxController', ['services', function(services) {
+  .controller('ChatBoxController', ['services', '$timeout', function(services, $timeout) {
     const chat = this;
 
     chat.msgs = [{
@@ -24,6 +24,11 @@ angular
       if (services.currentPrompt++ === services.bot.order.length) {
         services.currentPrompt = 0
       }
+      // console.log(var scroller = document.getElementsByClassName("messages");)
+      $timeout(function() {
+        var scroller = document.getElementsByClassName("messages")[0];
+        scroller.scrollTop = scroller.scrollHeight;
+      }, 0, false);
     }
   }])
   .service('services', function($http) {
@@ -51,7 +56,7 @@ angular
   .directive('chatBox', function() {
     return {
       template: `
-      <div class="messages">
+      <div class="messages" schroll-bottom="messages">
         <div ng-class="{'bot-div': !msg.bot}" ng-repeat="msg in chatBox.msgs track by $index">
         <span ng-class="msg.bot ? 'bot' : 'user'">{{msg.msg}}</span>
         </div>
@@ -59,6 +64,6 @@ angular
       <form class='msg-form' ng-submit="chatBox.recordResponse()" >
         <input class="user-input" ng-model="chatBox.msg" type="text">
       </form>
-      `
+      `,
     }
   })
