@@ -1,19 +1,24 @@
 angular
   .module('app', [
   ])
-  .controller('ChatBoxController', ['$http', function($http) {
+  .controller('ChatBoxController', ['services', function(services) {
     const chat = this;
     chat.msgs = ['Welcome to Chat Bot!'];
 
     chat.submitMsg = function() {
       chat.msgs.push(chat.msg);
-      $http.post('/users', {
-      })
+      services.postMsg();
+    }
+  }])
+  .service('services', function($http) {
+    const services = this;
+    services.postMsg = function() {
+      $http.post('/users', {})
         .then(function(data) {
           console.log('success with post')
         });
     }
-  }])
+  })
   .directive('chatBox', function() {
     return {
       template: `
