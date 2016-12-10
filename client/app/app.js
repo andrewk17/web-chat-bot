@@ -32,7 +32,7 @@ angular
     services.userName;
 
     services.msgs = [{
-      msg: 'Welcome to Chat Bot!',
+      msg: 'Hey there! My name is Stella.',
       bot: true
     }];
 
@@ -89,7 +89,8 @@ angular
         </div>
       </div>
       <form class='msg-form' ng-submit="chatBox.recordResponse()" >
-        <input class="user-input" ng-model="chatBox.msg" type="text">
+        <input class="user-input" ng-model="chatBox.msg" type="text" placeholder="Type your message here">
+        <input class="user-input-submit" type="submit" value="Send">
       </form>
       `,
     }
