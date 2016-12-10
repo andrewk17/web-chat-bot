@@ -4,6 +4,7 @@ const path = require('path');
 const port = process.env.PORT || 3000;
 const bodyParser = require('body-parser');
 const dbController = require('./db/controller.js');
+const botResponses = require('./botResponses.js')
 
 app.use(bodyParser.json());
 
@@ -14,6 +15,10 @@ app.post('/users', function(req, res) {
     .then(function() {
       res.sendStatus(200);
     })
+});
+
+app.get('/bot/responses', function(req, res) {
+  res.status(200).send(botResponses);
 })
 
 app.listen(port, function() {
