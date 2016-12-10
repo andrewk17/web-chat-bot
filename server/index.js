@@ -10,6 +10,7 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname + '/../client/app')));
 
 app.post('/users', function(req, res) {
+  console.log('in route')
   dbController.addToUser(req)
     .then(function() {
       res.sendStatus(200);
