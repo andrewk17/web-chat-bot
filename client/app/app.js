@@ -1,29 +1,14 @@
 angular
   .module('app', [
   ])
-  .controller('ChatBoxController', ['services', '$timeout', function(services, $timeout) {
+  .controller('ChatBoxController', ['msgService', '$timeout', function(msgService, $timeout) {
     const chat = this;
 
-    chat.msgs = [{
-      msg: 'Welcome to Chat Bot!',
-      bot: true
-    }];
-
-    function addMessage(msg, botFlag) {
-      chat.msgs.push({
-        msg: msg,
-        bot: botFlag,
-      })
-    }
+    chat.msgs = msgService.msgs;
 
     chat.recordResponse = function() {
-      addMessage(chat.msg, false);
-      services.postMsg(chat.msg);
+      msgService.submitMessage(chat.msg, false);
       chat.msg = '';
-      addMessage(services.bot.responses[services.bot.order[services.currentPrompt]], true);
-      if (services.currentPrompt++ === services.bot.order.length) {
-        services.currentPrompt = 0;
-      }
 
       $timeout(function() {
         var scroller = document.getElementsByClassName("messages")[0];
@@ -31,16 +16,37 @@ angular
       }, 0, false);
     }
   }])
-  .service('services', function($http) {
+  .service('msgService', function($http) {
     const services = this;
 
     services.currentPrompt = 0;
     services.bot;
 
-    services.postMsg = function(response) {
+    services.msgs = [{
+      msg: 'Welcome to Chat Bot!',
+      bot: true
+    }];
+
+    function addMessage(msg, botFlag) {
+      services.msgs.push({
+        msg: msg,
+        bot: botFlag,
+      })
+    }
+
+    services.submitMessage = function(msg) {
+        addMessage(msg, false);
+        services.postMsg(msg);
+        addMessage(services.bot.responses[services.bot.order[services.currentPrompt]], true);
+        if (services.currentPrompt++ === services.bot.order.length) {
+          services.currentPrompt = 0;
+        }
+    };
+
+    services.postMsg = function(msg) {
       $http.post('/users', {
         name: 'Andrew',
-        address: response,
+        address: msg,
       })
         .then(function(data) {
           console.log('success with post')
