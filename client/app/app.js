@@ -7,7 +7,8 @@ angular
 
     chat.submitMsg = function() {
       chat.msgs.push(chat.msg);
-      $http.post('/users', {})
+      $http.post('/users', {
+      })
         .then(function(data) {
           console.log('success with post')
         });
@@ -16,14 +17,14 @@ angular
   .directive('chatBox', function() {
     return {
       template: `
-      <div>
-        <div ng-repeat="msg in chatBox.msgs">
+      <div class="messages">
+        <div ng-repeat="msg in chatBox.msgs track by $index">
         {{msg}}
         </div>
-        <form ng-submit="chatBox.submitMsg()" >
-          <input ng-model="chatBox.msg" type="text">
-        </form>
       </div>
+      <form ng-submit="chatBox.submitMsg()" >
+        <input class="user-input" ng-model="chatBox.msg" type="text">
+      </form>
       `
     }
   })
