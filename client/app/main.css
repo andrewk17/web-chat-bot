@@ -1,6 +1,15 @@
 html, body {
-    margin: 0;
-    height: 100%;
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  text-align: center;
 }
 
 .chat-box {
@@ -12,14 +21,43 @@ html, body {
 
 .messages {
   flex: 1;
+  margin: 20px;
 }
 
 .user-input {
-  width: 100%;
+  width: 70%;
   padding: 0;
-  border-width: 2px 0 0 0;
+  height: 60%
 }
 
 .bot {
+  text-align: left;
+  color: black;
+  background-color: #E5E5EA;
+  padding: 5px;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+.bot-div {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.user {
   text-align: right;
+  color: white;
+  background-color: #0B93F6;
+  padding: 5px;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+.msg-form {
+  height: 15vh;
+  background-color: #e4e4e4;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
