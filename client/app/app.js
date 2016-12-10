@@ -3,7 +3,7 @@ angular
   ])
   .controller('ChatBoxController', ['msgService', '$timeout', function(msgService, $timeout) {
     const chat = this;
-
+    console.log('in controller');
     chat.msgs = msgService.msgs;
 
     chat.recordResponse = function() {
