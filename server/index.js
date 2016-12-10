@@ -15,6 +15,9 @@ app.post('/users', function(req, res) {
     .then(function() {
       res.sendStatus(200);
     })
+    .catch(function(error) {
+      res.sendStatus(500).send(error);
+    })
 });
 
 app.get('/bot/responses', function(req, res) {

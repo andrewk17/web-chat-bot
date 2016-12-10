@@ -18,13 +18,13 @@ angular
 
     chat.recordResponse = function() {
       addMessage(chat.msg, false);
+      services.postMsg(chat.msg);
       chat.msg = '';
-      services.postMsg();
       addMessage(services.bot.responses[services.bot.order[services.currentPrompt]], true);
       if (services.currentPrompt++ === services.bot.order.length) {
-        services.currentPrompt = 0
+        services.currentPrompt = 0;
       }
-      // console.log(var scroller = document.getElementsByClassName("messages");)
+
       $timeout(function() {
         var scroller = document.getElementsByClassName("messages")[0];
         scroller.scrollTop = scroller.scrollHeight;
@@ -37,8 +37,11 @@ angular
     services.currentPrompt = 0;
     services.bot;
 
-    services.postMsg = function() {
-      $http.post('/users', {})
+    services.postMsg = function(response) {
+      $http.post('/users', {
+        name: 'Andrew',
+        address: response,
+      })
         .then(function(data) {
           console.log('success with post')
         });
