@@ -24,6 +24,12 @@ h1 {
   font-size: 4vh;
 }
 
+pre {
+  margin: 0;
+  font-family: sans-serif;
+  white-space: pre-wrap;
+}
+
 .title {
   text-align: center;
 }
@@ -63,9 +69,7 @@ h1 {
   padding: .5em;
   border-radius: .2em;
   display: inline-block;
-  margin-left: .5em;
-  margin-top: .3em;
-  margin-bottom: .3em;
+  margin: .5em 1em;
 }
 
 .bot-div {
@@ -80,9 +84,7 @@ h1 {
   padding: .5em;
   border-radius: .2em;
   display: inline-block;
-  margin-right: .5em;
-  margin-top: .3em;
-  margin-bottom: .3em;
+  margin: .5em 1em;
 }
 
 .msg-form {

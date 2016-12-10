@@ -7,7 +7,11 @@ angular
     chat.msgs = msgService.msgs;
 
     chat.recordResponse = function() {
-      msgService.submitMessage(chat.msg, false);
+      if (chat.msg === "/help") {
+        msgService.printHelp();
+      } else {
+        msgService.submitMessage(chat.msg, false);
+      }
       chat.msg = '';
 
       $timeout(function() {
@@ -31,10 +35,16 @@ angular
     services.botResponses;
     services.userName;
 
-    services.msgs = [{
-      msg: 'Hey there! My name is Stella.',
-      bot: true
-    }];
+    services.msgs = [
+      {
+        msg: 'Hey there! My name is Stella.',
+        bot: true,
+      },
+      {
+        msg: 'If you need any help, enter /help for a list of commands.',
+        bot: true,
+      }
+  ];
 
     function addMessage(msg, botFlag) {
       services.msgs.push({
@@ -79,13 +89,26 @@ angular
     services.getBotResponses = function() {
        return $http.get('/bot/responses');
     }
+
+    services.printHelp = function() {
+      const helpMessage =
+      `List of available commands:
+      Start over. - starts the onboarding process all over
+      Show my name. - shows your name
+      Show my work experience. - shows your experience
+      Show my address. - shows your address
+      Show my education. - shows your education
+      Show my resume. - shows your resume
+      Show my LinkedIn. - shows your LinkedIn`;
+      addMessage(helpMessage, true);
+    }
   })
   .directive('chatBox', function() {
     return {
       template: `
       <div class="messages">
         <div ng-class="{'bot-div': !msg.bot}" ng-repeat="msg in chatBox.msgs track by $index">
-        <span ng-class="msg.bot ? 'bot' : 'user'">{{msg.msg}}</span>
+        <span ng-class="msg.bot ? 'bot' : 'user'"><pre>{{msg.msg}}</pre></span>
         </div>
       </div>
       <form class='msg-form' ng-submit="chatBox.recordResponse()" >
