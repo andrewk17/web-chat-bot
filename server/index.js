@@ -8,7 +8,7 @@ const botResponses = require('./botResponses.js')
 
 app.use(bodyParser.json());
 
-app.use(express.static(path.join(__dirname + '/../client/app')));
+app.use(express.static(path.join(__dirname + '/../client/public')));
 
 app.post('/users', function(req, res) {
   dbController.addToUser(req)

@@ -1,3 +1,5 @@
+require("./main.css");
+
 angular
   .module('app', [
   ])
