@@ -16,7 +16,7 @@ app.post('/users', function(req, res) {
       res.sendStatus(200);
     })
     .catch(function(error) {
-      res.sendStatus(500).send(error);
+      res.status(500).send(error);
     })
 });
 

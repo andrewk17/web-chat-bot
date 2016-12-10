@@ -29,6 +29,7 @@ angular
     let currentPromptIndex = 0;
     services.order;
     services.botResponses;
+    services.userName;
 
     services.msgs = [{
       msg: 'Welcome to Chat Bot!',
@@ -43,25 +44,34 @@ angular
     }
 
     services.submitMessage = function(msg) {
+      if (currentPromptIndex === 1) {
+        services.userName = msg;
+      }
       addMessage(msg, false);
-      services.postMsg(msg);
+      const prevBotQuestion = services.order[currentPromptIndex - 1];
+      services.postMsg(msg, prevBotQuestion);
       services.getNextBotMsg();
     };
 
     services.getNextBotMsg = function() {
-      const nextResponse = services.order[currentPromptIndex];
+      const nextResponse = services.order[currentPromptIndex++];
       addMessage(services.botResponses[nextResponse], true);
-      if (currentPromptIndex++ === services.order.length) {
-        currentPromptIndex = 0;
-      }
+      // if (currentPromptIndex++ === services.order.length) {
+      //   currentPromptIndex = 0;
+      // }
     }
 
-    services.postMsg = function(msg) {
-      $http.post('/users', {
-        name: 'Andrew',
-        address: msg,
-      })
-        .then(function(data) {
+    services.postMsg = function(msg, key) {
+      const data = {
+        name: services.userName,
+        field: {
+          key: key,
+          value: msg,
+        },
+      };
+
+      $http.post('/users', data)
+        .then(function(res) {
           console.log('success with post')
         });
     }

@@ -7,7 +7,7 @@ var userSchema = mongoose.Schema({
   education: String,
   workExperience: String,
   resume: String,
-  linkedInURL: String,
+  linkedIn: String,
 });
 
 var user = mongoose.model('User', userSchema);

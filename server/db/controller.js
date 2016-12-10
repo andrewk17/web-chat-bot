@@ -1,24 +1,21 @@
 const db = require('./index.js');
 const User = require('./models/user.js');
-var Promise = require("bluebird");
+const Promise = require("bluebird");
 
 module.exports = {
   addToUser(req, cb) {
     return new Promise(function(resolve, reject) {
-      const reqData = req.body;
-      const query = {
-        name: reqData.name
-      };
-      const update =   {
-          address: reqData.address,
-          education: reqData.education,
-          workExperience: reqData.workExperience,
-          resume: reqData.resume,
-          linkedInURL: reqData.linkedInURL,
+      const reqData = req.body,
+        query = {
+          name: reqData.name
         };
-      const options = {
-        upsert: true,
-      }
+        update = {},
+        options = {
+          upsert: true,
+        };
+        
+      update[reqData.field.key] = reqData.field.value;
+
       User.findOneAndUpdate(query, update, options)
         .then(function() {
           resolve();
