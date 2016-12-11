@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="UTF-8">
-    <title>Onboarding Chat Bot</title>
+    <title>Stella Bot</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.js"></script>
-    <script src="./app.js"></script>
-  </head>
-  <body ng-app="app" ng-controller="ChatBoxController as chatBox">
-    <chat-box/>
-  </body>
+    <script src="./bundle.js"></script>
+</head>
+
+<body ng-app="app" ng-controller="ChatBoxController as chatBox">
+    <h1 class="title">Stella Onboarding Bot</h1>
+    <chat-box class="chat-box" />
+</body>
+
 </html>
