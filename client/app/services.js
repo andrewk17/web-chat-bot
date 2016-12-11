@@ -36,6 +36,7 @@ function msgService($http) {
       if (currentPromptIndex === 1) {
         services.userName = msg;
       }
+      console.log(currentPromptIndex)
       if (currentPromptIndex <= services.order.length) {
         const prevBotQuestion = services.order[currentPromptIndex - 1];
         services.postMsg(msg, prevBotQuestion);
@@ -44,14 +45,26 @@ function msgService($http) {
     }
   };
 
+  services.getSameBotMsg = function() {
+    var response;
+    if (currentPromptIndex < services.order.length) {
+      mostRecentResponse = services.order[currentPromptIndex - 1];
+      response = services.botResponses[mostRecentResponse];
+    } else {
+      response = 'Thanks! The onboarding is complete.';
+    }
+    addMessage(response, true);
+  }
+
   services.getNextBotMsg = function() {
     var response;
     if (currentPromptIndex < services.order.length) {
-      nextResponse = services.order[currentPromptIndex++];
+      nextResponse = services.order[currentPromptIndex];
       response = services.botResponses[nextResponse];
     } else {
       response = 'Thanks! The onboarding is complete.';
     }
+    currentPromptIndex++;
     addMessage(response, true);
   }
 
@@ -78,7 +91,7 @@ function msgService($http) {
     })
     .then(function(data) {
       addMessage(data.data[key], true);
-      services.getNextBotMsg();
+      services.getSameBotMsg();
     })
     .catch(function(err) {
       console.log(err);
