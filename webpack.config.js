@@ -7,7 +7,7 @@ const publicPath = __dirname + '/client/public';
 module.exports = {
   context: appPath,
   entry: {
-    app: './app.js',
+    app: './app.js'
   },
   output: {
     path: publicPath,
@@ -15,12 +15,16 @@ module.exports = {
   },
   module: {
     loaders: [
-      { test: /\.css$/, loader: "style-loader!css-loader" }
+      {
+        test: /\.css$/,
+        loader: "style-loader!css-loader"
+      }
     ]
   },
-  plugins: [
-    new CopyWebpackPlugin([
-      { from: appPath + '/index.html', to: publicPath },
-    ])
-  ],
+  plugins: [new CopyWebpackPlugin([
+      {
+        from: appPath + '/index.html',
+        to: publicPath
+      }
+    ])]
 };

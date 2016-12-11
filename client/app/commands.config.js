@@ -1,10 +1,12 @@
 module.exports = {
+  // the commands that map to a field on User document
   'Show my name.': 'name',
   'Show my address.': 'address',
   'Show my education.': 'education',
   'Show my work experience.': 'workExperience',
   'Show my resume.': 'resume',
   'Show my LinkedIn.': 'linkedIn',
+  // help statement
   printHelp:
   `List of available commands:
   Start over. - starts the onboarding process all over

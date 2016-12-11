@@ -1,6 +1,15 @@
 module.exports = {
-  order: ['name', 'address', 'education', 'workExperience', 'resume', 'linkedIn'],
-  responses: {
+  // The order of questions
+  order: [
+    'name',
+    'address',
+    'education',
+    'workExperience',
+    'resume',
+    'linkedIn'
+  ],
+  // The set of questions the bot asks
+  questions: {
     name: 'What\'s your name?',
     address: 'What\'s your address?',
     education: 'Tell me about your education.',

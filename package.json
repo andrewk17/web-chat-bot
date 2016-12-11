@@ -7,13 +7,14 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./server/index.js",
     "dev": "./node_modules/.bin/webpack -d -w",
+    "build": "./node_modules/.bin/webpack -p --progress",
     "heroku-postbuild": "./node_modules/.bin/webpack -p --progress"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/andrewk17/web-chat-bot.git"
   },
-  "author": "",
+  "author": "Andrew Kim",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/andrewk17/web-chat-bot/issues"

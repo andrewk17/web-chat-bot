@@ -1,37 +1,38 @@
-const express = require('express');
-const app = express();
-const path = require('path');
-const port = process.env.PORT || 3000;
-const bodyParser = require('body-parser');
-const dbController = require('./db/controller.js');
-const botResponses = require('./config.js')
+const express = require('express'),
+  app = express(),
+  path = require('path'),
+  port = process.env.PORT || 3000,
+  bodyParser = require('body-parser'),
+  dbController = require('./db/controller.js'),
+  botQuestions = require('./config.js');
 
+// JSON parsing middleware
 app.use(bodyParser.json());
 
+// static files
 app.use(express.static(path.join(__dirname + '/../client/public')));
 
+// records user data
 app.post('/users', function(req, res) {
-  dbController.addToUser(req)
-    .then(function() {
-      res.sendStatus(200);
-    })
-    .catch(function(error) {
-      res.status(500).send(error);
-    })
+  dbController.addToUser(req).then(function() {
+    res.sendStatus(200);
+  }).catch(function(error) {
+    res.status(500).send(error);
+  })
 });
 
+// retrieves user data
 app.get('/users', function(req, res) {
-  dbController.retrieveUserData(req)
-    .then(function(data) {
-      res.status(200).send(data);
-    })
-    .catch(function(err) {
-      res.status(500).send(err);
-    })
+  dbController.retrieveUserData(req).then(function(data) {
+    res.status(200).send(data);
+  }).catch(function(err) {
+    res.status(500).send(err);
+  })
 })
 
-app.get('/bot/responses', function(req, res) {
-  res.status(200).send(botResponses);
+// retrieves bot's set of questions
+app.get('/bot/questions', function(req, res) {
+  res.status(200).send(botQuestions);
 })
 
 app.listen(port, function() {

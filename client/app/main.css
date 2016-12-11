@@ -12,8 +12,7 @@ body {
   flex-direction: column;
 }
 
-input[type="text"]
-{
+input[type="text"] {
   font-size: 3vh;
   padding-left: .5em;
 }

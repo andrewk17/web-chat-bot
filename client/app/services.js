@@ -2,65 +2,69 @@ const commands = require('./commands.config.js');
 
 function msgService($http) {
   const services = this;
-  var currentPromptIndex = 0;
-  services.order;
-  services.botResponses;
-  services.userName;
+  var currentPromptIndex = 0,
+    order,
+    botResponses,
+    userName;
 
   services.msgs = [
     {
       msg: 'Hey there! My name is Stella.',
-      bot: true,
-    },
-    {
+      bot: true
+    }, {
       msg: 'If you need any help, enter /help for a list of commands.',
-      bot: true,
+      bot: true
     }
-];
-
-  function addMessage(msg, botFlag) {
-    services.msgs.push({
-      msg: msg,
-      bot: botFlag,
-    })
-  }
+  ];
 
   services.submitMessage = function(msg) {
     addMessage(msg, false);
     if (msg === 'Start over.') {
       currentPromptIndex = 0;
-      services.getNextBotMsg();
+      getNextBotMsg();
     } else if (commands[msg]) {
-      services.retrieveData(services.userName, commands[msg]);
+      retrieveData(userName, commands[msg]);
     } else {
       if (currentPromptIndex === 1) {
-        services.userName = msg;
+        userName = msg;
       }
-      console.log(currentPromptIndex)
-      if (currentPromptIndex <= services.order.length) {
-        const prevBotQuestion = services.order[currentPromptIndex - 1];
-        services.postMsg(msg, prevBotQuestion);
-        services.getNextBotMsg();
+      if (currentPromptIndex <= order.length) {
+        const prevBotQuestion = order[currentPromptIndex - 1];
+        postMsg(msg, prevBotQuestion);
+        getNextBotMsg();
       }
     }
-  };
+  }
 
-  services.getSameBotMsg = function() {
+  services.printHelp = function() {
+    addMessage(commands.printHelp, true);
+  }
+
+  // adds message to array of messages
+  // can be either bot or user message
+  function addMessage(msg, botFlag) {
+    services.msgs.push({msg: msg, bot: botFlag})
+  }
+
+  // gets the same bot msg as last timeout
+  // useful for when user has not progressed with onboarding
+  function getSameBotMsg() {
     var response;
-    if (currentPromptIndex < services.order.length) {
-      mostRecentResponse = services.order[currentPromptIndex - 1];
-      response = services.botResponses[mostRecentResponse];
+    if (currentPromptIndex < order.length) {
+      mostRecentResponse = order[currentPromptIndex - 1];
+      response = botResponses[mostRecentResponse];
     } else {
       response = 'Thanks! The onboarding is complete.';
     }
     addMessage(response, true);
   }
 
-  services.getNextBotMsg = function() {
+  // gets the next question for the bot to ask user
+  function getNextBotMsg() {
     var response;
-    if (currentPromptIndex < services.order.length) {
-      nextResponse = services.order[currentPromptIndex];
-      response = services.botResponses[nextResponse];
+    if (currentPromptIndex < order.length) {
+      nextResponse = order[currentPromptIndex];
+      response = botResponses[nextResponse];
     } else {
       response = 'Thanks! The onboarding is complete.';
     }
@@ -68,48 +72,46 @@ function msgService($http) {
     addMessage(response, true);
   }
 
-  services.postMsg = function(msg, key) {
+  // sends user data to backend
+  function postMsg(msg, key) {
     const data = {
-      name: services.userName,
+      name: userName,
       field: {
         key: key,
-        value: msg,
-      },
+        value: msg
+      }
     };
 
-    $http.post('/users', data)
-    .catch(function(err) {
+    $http.post('/users', data).catch(function(err) {
       console.log('Error', err);
     })
   }
 
-  services.retrieveData = function(userName, key) {
+  // retrieves user data from backend
+  function retrieveData(userName, key) {
     $http.get('/users', {
       params: {
         userName: userName
       }
-    })
-    .then(function(data) {
+    }).then(function(data) {
       addMessage(data.data[key], true);
-      services.getSameBotMsg();
-    })
-    .catch(function(err) {
+      getSameBotMsg();
+    }).catch(function(err) {
       console.log(err);
     })
   }
 
-  services.getBotResponses = function() {
-     $http.get('/bot/responses')
-      .then(function(data) {
-        services.order = data.data.order;
-        services.botResponses = data.data.responses;
-        services.getNextBotMsg();
-      });
+  // gets entire set of bot questions
+  function getAllBotQuestions() {
+    $http.get('/bot/questions').then(function(data) {
+      order = data.data.order;
+      botResponses = data.data.questions;
+      getNextBotMsg();
+    });
   }
 
-  services.printHelp = function() {
-    addMessage(commands.printHelp, true);
-  }
+  // retrives bot questions from backend
+  getAllBotQuestions();
 }
 
 angular.module('app').service('msgService', msgService);
