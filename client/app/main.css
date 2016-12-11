@@ -50,7 +50,8 @@ pre {
 .user-input {
   width: 70%;
   padding: 0;
-  height: 60%
+  height: 60%;
+  border: .1em solid black;
 }
 
 .user-input-submit {

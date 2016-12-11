@@ -29,17 +29,18 @@ function msgService($http) {
       services.userName = msg;
     }
     addMessage(msg, false);
-    const prevBotQuestion = services.order[currentPromptIndex - 1];
-    services.postMsg(msg, prevBotQuestion);
-    services.getNextBotMsg();
+    if (currentPromptIndex < services.order.length) {
+      const prevBotQuestion = services.order[currentPromptIndex - 1];
+      services.postMsg(msg, prevBotQuestion);
+      services.getNextBotMsg();
+    } else {
+      addMessage('Thanks! The onboarding is complete.', true);
+    }
   };
 
   services.getNextBotMsg = function() {
     const nextResponse = services.order[currentPromptIndex++];
     addMessage(services.botResponses[nextResponse], true);
-    // if (currentPromptIndex++ === services.order.length) {
-    //   currentPromptIndex = 0;
-    // }
   }
 
   services.postMsg = function(msg, key) {
@@ -52,9 +53,9 @@ function msgService($http) {
     };
 
     $http.post('/users', data)
-      .then(function(res) {
-        console.log('success with post')
-      });
+    .catch(function(err) {
+      console.log('Error', err);
+    })
   }
 
   services.getBotResponses = function() {
