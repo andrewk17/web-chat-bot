@@ -4,7 +4,7 @@ const path = require('path');
 const port = process.env.PORT || 3000;
 const bodyParser = require('body-parser');
 const dbController = require('./db/controller.js');
-const botResponses = require('./botResponses.js')
+const botResponses = require('./config.js')
 
 app.use(bodyParser.json());
 
