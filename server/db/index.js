@@ -1,3 +1,5 @@
+'use strict';
+
 const mongoose = require('mongoose');
 const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost/stella';
 

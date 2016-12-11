@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
   // The order of questions
   order: [

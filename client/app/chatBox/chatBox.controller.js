@@ -1,3 +1,5 @@
+'use strict';
+
 function chatBoxController(msgService, $timeout) {
   const chat = this;
 

@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
   // the commands that map to a field on User document
   'Show my name.': 'name',

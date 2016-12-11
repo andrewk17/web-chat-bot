@@ -1,3 +1,5 @@
+'use strict';
+
 // include CSS in webpack bundle
 require('./main.css');
 

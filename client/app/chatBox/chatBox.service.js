@@ -1,3 +1,5 @@
+'use strict';
+
 const commands = require('./chatBox.config.js');
 
 function msgService($http) {
@@ -60,7 +62,7 @@ function msgService($http) {
   function getSameBotMsg() {
     let response;
     if (currentPromptIndex < order.length) {
-      mostRecentResponse = order[currentPromptIndex - 1];
+      let mostRecentResponse = order[currentPromptIndex - 1];
       response = botResponses[mostRecentResponse];
     } else {
       response = ONBOARDING_COMPLETE;

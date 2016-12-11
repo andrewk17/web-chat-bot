@@ -1,3 +1,5 @@
+'use strict';
+
 function chatBox() {
   return {
     template: `

@@ -1,3 +1,5 @@
+'use strict';
+
 const db = require('./index.js');
 const User = require('./models/user.js');
 

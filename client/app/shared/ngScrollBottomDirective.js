@@ -1,3 +1,5 @@
+'use strict';
+
 function ngScrollBottom($timeout) {
   return {
     scope: {
