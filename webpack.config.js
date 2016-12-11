@@ -22,5 +22,5 @@ module.exports = {
     new CopyWebpackPlugin([
       { from: appPath + '/index.html', to: publicPath },
     ])
-  ]
+  ],
 };
