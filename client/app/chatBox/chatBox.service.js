@@ -1,12 +1,14 @@
-const commands = require('./commands.config.js');
+const commands = require('./chatBox.config.js');
 
 function msgService($http) {
-  const services = this;
-  var currentPromptIndex = 0,
+  const services = this,
+    ONBOARDING_COMPLETE = 'Thanks! The onboarding is complete.';
+  let currentPromptIndex = 0,
     order,
     botResponses,
     userName;
 
+  // messages seeded with welcoming messages
   services.msgs = [
     {
       msg: 'Hey there! My name is Stella.',
@@ -18,24 +20,31 @@ function msgService($http) {
   ];
 
   services.submitMessage = function(msg) {
+    // always add message from user to array of messages
     addMessage(msg, false);
+    // check for start over command
     if (msg === 'Start over.') {
+      // restarts bot questions
       currentPromptIndex = 0;
       getNextBotMsg();
     } else if (commands[msg]) {
+      // retrieves user data from DB
       retrieveData(userName, commands[msg]);
     } else {
+      // save username if the user is responding to first question
       if (currentPromptIndex === 1) {
         userName = msg;
       }
+      // only fetch next robot question if there is another question
       if (currentPromptIndex <= order.length) {
-        const prevBotQuestion = order[currentPromptIndex - 1];
+        const prevBotQuestion = order[currentPromptIndex - 1]; // getting the just asked question
         postMsg(msg, prevBotQuestion);
         getNextBotMsg();
       }
     }
   }
 
+  // Adds help message to array of messages
   services.printHelp = function() {
     addMessage(commands.printHelp, true);
   }
@@ -49,24 +58,24 @@ function msgService($http) {
   // gets the same bot msg as last timeout
   // useful for when user has not progressed with onboarding
   function getSameBotMsg() {
-    var response;
+    let response;
     if (currentPromptIndex < order.length) {
       mostRecentResponse = order[currentPromptIndex - 1];
       response = botResponses[mostRecentResponse];
     } else {
-      response = 'Thanks! The onboarding is compvare.';
+      response = ONBOARDING_COMPLETE;
     }
     addMessage(response, true);
   }
 
   // gets the next question for the bot to ask user
   function getNextBotMsg() {
-    var response;
+    let response;
     if (currentPromptIndex < order.length) {
-      nextResponse = order[currentPromptIndex];
+      let nextResponse = order[currentPromptIndex];
       response = botResponses[nextResponse];
     } else {
-      response = 'Thanks! The onboarding is compvare.';
+      response = ONBOARDING_COMPLETE;
     }
     currentPromptIndex++;
     addMessage(response, true);
@@ -114,4 +123,4 @@ function msgService($http) {
   getAllBotQuestions();
 }
 
-angular.module('app').service('msgService', msgService);
+module.exports = msgService;

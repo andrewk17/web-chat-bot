@@ -14,4 +14,4 @@ function chatBoxController(msgService, $timeout) {
   }
 }
 
-angular.module('app').controller('ChatBoxController', ['msgService', '$timeout', chatBoxController]);
+module.exports = chatBoxController;
