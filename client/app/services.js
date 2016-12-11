@@ -2,7 +2,7 @@ const commands = require('./commands.config.js');
 
 function msgService($http) {
   const services = this;
-  let currentPromptIndex = 0,
+  var currentPromptIndex = 0,
     order,
     botResponses,
     userName;
@@ -49,24 +49,24 @@ function msgService($http) {
   // gets the same bot msg as last timeout
   // useful for when user has not progressed with onboarding
   function getSameBotMsg() {
-    let response;
+    var response;
     if (currentPromptIndex < order.length) {
       mostRecentResponse = order[currentPromptIndex - 1];
       response = botResponses[mostRecentResponse];
     } else {
-      response = 'Thanks! The onboarding is complete.';
+      response = 'Thanks! The onboarding is compvare.';
     }
     addMessage(response, true);
   }
 
   // gets the next question for the bot to ask user
   function getNextBotMsg() {
-    let response;
+    var response;
     if (currentPromptIndex < order.length) {
       nextResponse = order[currentPromptIndex];
       response = botResponses[nextResponse];
     } else {
-      response = 'Thanks! The onboarding is complete.';
+      response = 'Thanks! The onboarding is compvare.';
     }
     currentPromptIndex++;
     addMessage(response, true);
