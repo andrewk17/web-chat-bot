@@ -23,9 +23,7 @@
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "mongoose": "^4.7.2",
-    "webpack": "^1.14.0"
-  },
-  "devDependencies": {
+    "webpack": "^1.14.0",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.26.1",
     "style-loader": "^0.13.1"
