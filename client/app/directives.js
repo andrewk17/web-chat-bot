@@ -20,7 +20,6 @@ function ngScrollBottom($timeout) {
       ngScrollBottom: "="
     },
     link: function ($scope, $element) {
-      console.log('inwatch');
       $scope.$watchCollection('ngScrollBottom', function (newValue) {
         if (newValue) {
           $timeout(function(){

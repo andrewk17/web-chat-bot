@@ -13,10 +13,5 @@ function chatBoxController(msgService, $timeout) {
   }
 
   msgService.getBotResponses()
-  .then(function(data) {
-    msgService.order = data.data.order;
-    msgService.botResponses = data.data.responses;
-    msgService.getNextBotMsg();
-  })
 }
 angular.module('app').controller('ChatBoxController', ['msgService', '$timeout', chatBoxController]);

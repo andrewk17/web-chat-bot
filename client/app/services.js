@@ -36,19 +36,23 @@ function msgService($http) {
       if (currentPromptIndex === 1) {
         services.userName = msg;
       }
-      if (currentPromptIndex < services.order.length) {
+      if (currentPromptIndex <= services.order.length) {
         const prevBotQuestion = services.order[currentPromptIndex - 1];
         services.postMsg(msg, prevBotQuestion);
         services.getNextBotMsg();
-      } else {
-        addMessage('Thanks! The onboarding is complete.', true);
       }
     }
   };
 
   services.getNextBotMsg = function() {
-    const nextResponse = services.order[currentPromptIndex++];
-    addMessage(services.botResponses[nextResponse], true);
+    var response;
+    if (currentPromptIndex < services.order.length) {
+      nextResponse = services.order[currentPromptIndex++];
+      response = services.botResponses[nextResponse];
+    } else {
+      response = 'Thanks! The onboarding is complete.';
+    }
+    addMessage(response, true);
   }
 
   services.postMsg = function(msg, key) {
@@ -67,14 +71,12 @@ function msgService($http) {
   }
 
   services.retrieveData = function(userName, key) {
-    console.log('in retrieve')
     $http.get('/users', {
       params: {
         userName: userName
       }
     })
     .then(function(data) {
-      console.log('came back wtih', data)
       addMessage(data.data[key], true);
       services.getNextBotMsg();
     })
@@ -84,20 +86,16 @@ function msgService($http) {
   }
 
   services.getBotResponses = function() {
-     return $http.get('/bot/responses');
+     $http.get('/bot/responses')
+      .then(function(data) {
+        services.order = data.data.order;
+        services.botResponses = data.data.responses;
+        services.getNextBotMsg();
+      });
   }
 
   services.printHelp = function() {
-    const helpMessage =
-    `List of available commands:
-    Start over. - starts the onboarding process all over
-    Show my name. - shows your name
-    Show my work experience. - shows your experience
-    Show my address. - shows your address
-    Show my education. - shows your education
-    Show my resume. - shows your resume
-    Show my LinkedIn. - shows your LinkedIn`;
-    addMessage(helpMessage, true);
+    addMessage(commands.printHelp, true);
   }
 }
 
