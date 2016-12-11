@@ -10,11 +10,6 @@ function chatBoxController(msgService, $timeout) {
       msgService.submitMessage(chat.msg, false);
     }
     chat.msg = '';
-
-    $timeout(function() {
-      var scroller = document.getElementsByClassName("messages")[0];
-      scroller.scrollTop = scroller.scrollHeight;
-    }, 0, false);
   }
 
   msgService.getBotResponses()

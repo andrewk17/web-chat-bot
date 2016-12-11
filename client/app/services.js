@@ -1,6 +1,7 @@
+const commands = require('./commands.config.js');
+
 function msgService($http) {
   const services = this;
-
   var currentPromptIndex = 0;
   services.order;
   services.botResponses;
@@ -25,16 +26,23 @@ function msgService($http) {
   }
 
   services.submitMessage = function(msg) {
-    if (currentPromptIndex === 1) {
-      services.userName = msg;
-    }
     addMessage(msg, false);
-    if (currentPromptIndex < services.order.length) {
-      const prevBotQuestion = services.order[currentPromptIndex - 1];
-      services.postMsg(msg, prevBotQuestion);
+    if (msg === 'Start over.') {
+      currentPromptIndex = 0;
       services.getNextBotMsg();
+    } else if (commands[msg]) {
+      services.retrieveData(services.userName, commands[msg]);
     } else {
-      addMessage('Thanks! The onboarding is complete.', true);
+      if (currentPromptIndex === 1) {
+        services.userName = msg;
+      }
+      if (currentPromptIndex < services.order.length) {
+        const prevBotQuestion = services.order[currentPromptIndex - 1];
+        services.postMsg(msg, prevBotQuestion);
+        services.getNextBotMsg();
+      } else {
+        addMessage('Thanks! The onboarding is complete.', true);
+      }
     }
   };
 
@@ -55,6 +63,23 @@ function msgService($http) {
     $http.post('/users', data)
     .catch(function(err) {
       console.log('Error', err);
+    })
+  }
+
+  services.retrieveData = function(userName, key) {
+    console.log('in retrieve')
+    $http.get('/users', {
+      params: {
+        userName: userName
+      }
+    })
+    .then(function(data) {
+      console.log('came back wtih', data)
+      addMessage(data.data[key], true);
+      services.getNextBotMsg();
+    })
+    .catch(function(err) {
+      console.log(err);
     })
   }
 

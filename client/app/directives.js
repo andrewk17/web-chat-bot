@@ -1,7 +1,7 @@
 function chatBox() {
   return {
     template: `
-    <div class="messages">
+    <div class="messages" ng-scroll-bottom="chatBox.msgs">
       <div ng-class="{'bot-div': !msg.bot}" ng-repeat="msg in chatBox.msgs track by $index">
       <span ng-class="msg.bot ? 'bot' : 'user'"><pre>{{msg.msg}}</pre></span>
       </div>
@@ -14,4 +14,24 @@ function chatBox() {
   }
 }
 
-angular.module('app').directive('chatBox', chatBox);
+function ngScrollBottom($timeout) {
+  return {
+    scope: {
+      ngScrollBottom: "="
+    },
+    link: function ($scope, $element) {
+      console.log('inwatch');
+      $scope.$watchCollection('ngScrollBottom', function (newValue) {
+        if (newValue) {
+          $timeout(function(){
+            $element[0].scrollTop = $element[0].scrollHeight
+          }, 0);
+        }
+      });
+    }
+  }
+}
+
+angular.module('app')
+  .directive('chatBox', chatBox)
+  .directive('ngScrollBottom', ['$timeout', ngScrollBottom]);

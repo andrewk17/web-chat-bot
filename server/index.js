@@ -20,6 +20,16 @@ app.post('/users', function(req, res) {
     })
 });
 
+app.get('/users', function(req, res) {
+  dbController.retrieveUserData(req)
+    .then(function(data) {
+      res.status(200).send(data);
+    })
+    .catch(function(err) {
+      res.status(500).send(err);
+    })
+})
+
 app.get('/bot/responses', function(req, res) {
   res.status(200).send(botResponses);
 })
