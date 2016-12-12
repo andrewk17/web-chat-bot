@@ -36,6 +36,7 @@ What would your next feature(s) be?
 * More intelligent message parsing including validation (for example, checking to see the response to the LinkedIn question is actually a link)
 * More dynamic bot questions and responses. Right now it just goes in a linear fashion and does not actually do anything differently based on your response (besides the help command and basic retrieval)
 * Maybe an upload feature for your resume
+* Handle multiple people with the same exact name
 
 What do you think is the weakest part of your overall Stella chat experience?
 * The Q&A of the bot is rather simplistic at the moment. But the way it's built makes it easy to build this out further in a future iteration.
@@ -44,4 +45,4 @@ What, in your opinion, is the best part (from a user's perspective)?
 * The UI/UX scales down nicely for pleasant mobile experience as well as desktop experience. I took inspiration from the iPhone messaging app for design cues.
 
 Do you think that this is a good onboarding experience? Why or why not?
-* Not really. When I'm inputting large amount of data, I want to see everything I have already put in and am going to need to put in on one page. With the chat, I have no idea how many questions are left. I have to query the chat bot to see what I wrote previously instead of just scrolling up. With this interface, it also looks annoying to go back and edit an answer.
+* Not really. When I'm inputting large amount of data, I want to see everything I have already put in and am going to need to put in on one page. With the chat, I have no idea how many questions are left. I have to query the chat bot to see what I wrote previously instead of just scrolling up. With this interface, it is difficult to go back and edit an answer.
