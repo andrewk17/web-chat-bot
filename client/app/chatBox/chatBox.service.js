@@ -26,7 +26,7 @@ function msgService($http, $log) {
     // always add message from user to array of messages
     addMessage(msg, false);
     // check for start over command
-    if (msg === 'Start over.') {
+    if (msg === 'Start over') {
       // restarts bot questions
       currentPromptIndex = 0;
       getNextBotMsg();
