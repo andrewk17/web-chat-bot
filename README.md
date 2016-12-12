@@ -14,9 +14,9 @@ An intuitive chat bot interface that queries a user for information required to 
 * Everything is keyed off the person's name. It does not handle the case where two distinct people have the same exact name. In this case, the second person will overwrite the values of the first.
 * At any point you can enter '/help' for a list of commands.
 * Commands much match exactly.
-* At any point you can start over by entering 'Start over.'
+* At any point you can start over by entering 'Start over'.
 * After you enter your name, you can at any point enter a command to retrieve previously entered data.
-* At the end of the onboarding process, the bot stops responding.
+* At the end of the onboarding process, the bot stops responding. But you can start the process over if you'd like.
 
 ## Structure
 
