@@ -3,18 +3,18 @@
 function ngScrollBottom($timeout) {
   return {
     scope: {
-      ngScrollBottom: "="
+      ngScrollBottom: '='
     },
     link: function($scope, $element) {
       $scope.$watchCollection('ngScrollBottom', function(newValue) {
         if (newValue) {
           $timeout(function() {
-            $element[0].scrollTop = $element[0].scrollHeight
+            $element[0].scrollTop = $element[0].scrollHeight;
           }, 0);
         }
       });
     }
-  }
+  };
 }
 
 module.exports = ngScrollBottom;

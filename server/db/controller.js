@@ -1,6 +1,6 @@
 'use strict';
 
-const db = require('./index.js');
+require('./index.js');
 const User = require('./models/user.js');
 
 module.exports = {

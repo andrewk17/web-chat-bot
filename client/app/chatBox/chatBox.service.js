@@ -1,6 +1,6 @@
 'use strict';
 
-function msgService($http) {
+function msgService($http, $log) {
   const services = this,
     ONBOARDING_COMPLETE = 'Thanks! The onboarding is complete.';
   let currentPromptIndex = 0,
@@ -44,17 +44,17 @@ function msgService($http) {
         getNextBotMsg();
       }
     }
-  }
+  };
 
   // Adds help message to array of messages
   services.printHelp = function() {
     addMessage(printHelp, true);
-  }
+  };
 
   // adds message to array of messages
   // can be either bot or user message
   function addMessage(msg, botFlag) {
-    services.msgs.push({msg: msg, bot: botFlag})
+    services.msgs.push({msg: msg, bot: botFlag});
   }
 
   // gets the same bot msg as last timeout
@@ -94,8 +94,8 @@ function msgService($http) {
     };
 
     $http.post('/users', data).catch(function(err) {
-      console.log('Error', err);
-    })
+      $log('Error', err);
+    });
   }
 
   // retrieves user data from backend
@@ -108,8 +108,8 @@ function msgService($http) {
       addMessage(data.data[key], true);
       getSameBotMsg();
     }).catch(function(err) {
-      console.log(err);
-    })
+      $log(err);
+    });
   }
 
   // gets configuration from backend

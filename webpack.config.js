@@ -1,4 +1,4 @@
-const webpack = require('webpack');
+require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const appPath = __dirname + '/client/app';
@@ -6,7 +6,7 @@ const publicPath = __dirname + '/client/public';
 
 module.exports = {
   context: appPath,
-  devtool: "#source-map",
+  devtool: '#source-map',
   entry: {
     app: './app.js'
   },
@@ -18,7 +18,7 @@ module.exports = {
     loaders: [
       {
         test: /\.css$/,
-        loader: "style-loader!css-loader"
+        loader: 'style-loader!css-loader'
       }, {
         test: /\.js$/,
         loaders: [

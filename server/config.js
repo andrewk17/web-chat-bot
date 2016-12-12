@@ -38,4 +38,4 @@ module.exports = {
   Show my education. - shows your education
   Show my resume. - shows your resume
   Show my LinkedIn. - shows your LinkedIn`,
-}
+};

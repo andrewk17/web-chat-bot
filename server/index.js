@@ -20,7 +20,7 @@ app.post('/users', function(req, res) {
     res.sendStatus(200);
   }).catch(function(error) {
     res.status(500).send(error);
-  })
+  });
 });
 
 // retrieves user data
@@ -29,14 +29,14 @@ app.get('/users', function(req, res) {
     res.status(200).send(data);
   }).catch(function(err) {
     res.status(500).send(err);
-  })
-})
+  });
+});
 
 // retrieves bot's set of questions
 app.get('/bot/questions', function(req, res) {
   res.status(200).send(botQuestions);
-})
+});
 
 app.listen(port, function() {
-  console.log(`Listening on port ${port}`)
+  console.log(`Listening on port ${port}`);
 });

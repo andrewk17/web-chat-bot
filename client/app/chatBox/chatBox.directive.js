@@ -13,7 +13,7 @@ function chatBox() {
       <input class="user-input-submit" type="submit" value="Send">
     </form>
     `,
-  }
+  };
 }
 
 module.exports = chatBox;
