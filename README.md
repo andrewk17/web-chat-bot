@@ -9,6 +9,15 @@ An intuitive chat bot interface that queries a user for information required to 
 3. Start server: `npm start`
 4. Navigate to either specified URL and port or `localhost:3000`
 
+## Usage Notes
+
+* Everything is keyed off the person's name. It does not handle the case where two distinct people have the same exact name. In this case, the second person will overwrite the values of the first.
+* At any point you can enter '/help' for a list of commands.
+* Commands much exactly including punctuation.
+* At any point you can start over by entering 'Start over.'
+* After you enter your name, you can at any point enter a command to retrieve previously entered data.
+* At the end of the onboarding process, the bot stops responding.
+
 ## Structure
 
 ### Frontend
