@@ -1,14 +1,14 @@
 'use strict';
 
-const commands = require('./chatBox.config.js');
-
 function msgService($http) {
   const services = this,
     ONBOARDING_COMPLETE = 'Thanks! The onboarding is complete.';
   let currentPromptIndex = 0,
     order,
     botResponses,
-    userName;
+    userName,
+    commands,
+    printHelp;
 
   // messages seeded with welcoming messages
   services.msgs = [
@@ -48,7 +48,7 @@ function msgService($http) {
 
   // Adds help message to array of messages
   services.printHelp = function() {
-    addMessage(commands.printHelp, true);
+    addMessage(printHelp, true);
   }
 
   // adds message to array of messages
@@ -112,17 +112,19 @@ function msgService($http) {
     })
   }
 
-  // gets entire set of bot questions
-  function getAllBotQuestions() {
+  // gets configuration from backend
+  function getConfig() {
     $http.get('/bot/questions').then(function(data) {
       order = data.data.order;
       botResponses = data.data.questions;
+      commands = data.data.commands;
+      printHelp = data.data.printHelp;
       getNextBotMsg();
     });
   }
 
   // retrives bot questions from backend
-  getAllBotQuestions();
+  getConfig();
 }
 
 module.exports = msgService;
