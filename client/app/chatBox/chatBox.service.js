@@ -3,6 +3,7 @@
 function msgService($http, $log) {
   const services = this,
     ONBOARDING_COMPLETE = 'Thanks! The onboarding is complete.';
+
   let currentPromptIndex = 0,
     order,
     botResponses,
@@ -29,9 +30,18 @@ function msgService($http, $log) {
       // restarts bot questions
       currentPromptIndex = 0;
       getNextBotMsg();
+    // check to see if user entered a command
     } else if (commands[msg]) {
+      let key = commands[msg];
       // retrieves user data from DB
-      retrieveData(userName, commands[msg]);
+      retrieveData(userName)
+        .then(data => {
+          addMessage(data.data[key], true);
+          getSameBotMsg();
+        })
+        .catch(err => {
+          $log(err);
+        });
     } else {
       // save username if the user is responding to first question
       if (currentPromptIndex === 1) {
@@ -40,7 +50,10 @@ function msgService($http, $log) {
       // only fetch next robot question if there is another question
       if (currentPromptIndex <= order.length) {
         const prevBotQuestion = order[currentPromptIndex - 1]; // getting the just asked question
-        postMsg(msg, prevBotQuestion);
+        postMsg(msg, prevBotQuestion)
+          .catch(err => {
+            $log('Error', err);
+          });
         getNextBotMsg();
       }
     }
@@ -93,38 +106,32 @@ function msgService($http, $log) {
       }
     };
 
-    $http.post('/users', data).catch(function(err) {
-      $log('Error', err);
-    });
+    return $http.post('/users', data);
   }
 
   // retrieves user data from backend
-  function retrieveData(userName, key) {
-    $http.get('/users', {
+  function retrieveData(userName) {
+    return $http.get('/users', {
       params: {
         userName: userName
       }
-    }).then(function(data) {
-      addMessage(data.data[key], true);
-      getSameBotMsg();
-    }).catch(function(err) {
-      $log(err);
     });
   }
 
   // gets configuration from backend
   function getConfig() {
-    $http.get('/bot/questions').then(function(data) {
+    return $http.get('/bot/questions');
+  }
+
+  // retrives bot questions from backend
+  getConfig()
+    .then(data => {
       order = data.data.order;
       botResponses = data.data.questions;
       commands = data.data.commands;
       printHelp = data.data.printHelp;
       getNextBotMsg();
     });
-  }
-
-  // retrives bot questions from backend
-  getConfig();
 }
 
 module.exports = msgService;

@@ -15,28 +15,28 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname + '/../client/public')));
 
 // records user data
-app.post('/users', function(req, res) {
-  dbController.addToUser(req).then(function() {
+app.post('/users', (req, res) => {
+  dbController.addToUser(req).then(() => {
     res.sendStatus(200);
-  }).catch(function(error) {
+  }).catch((error) => {
     res.status(500).send(error);
   });
 });
 
 // retrieves user data
-app.get('/users', function(req, res) {
-  dbController.retrieveUserData(req).then(function(data) {
+app.get('/users', (req, res) => {
+  dbController.retrieveUserData(req).then(data => {
     res.status(200).send(data);
-  }).catch(function(err) {
+  }).catch(err => {
     res.status(500).send(err);
   });
 });
 
 // retrieves bot's set of questions
-app.get('/bot/questions', function(req, res) {
+app.get('/bot/questions', (req, res) => {
   res.status(200).send(botQuestions);
 });
 
-app.listen(port, function() {
+app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });

@@ -5,10 +5,10 @@ function ngScrollBottom($timeout) {
     scope: {
       ngScrollBottom: '='
     },
-    link: function($scope, $element) {
-      $scope.$watchCollection('ngScrollBottom', function(newValue) {
+    link: ($scope, $element) => {
+      $scope.$watchCollection('ngScrollBottom', newValue => {
         if (newValue) {
-          $timeout(function() {
+          $timeout(() => {
             $element[0].scrollTop = $element[0].scrollHeight;
           }, 0);
         }
